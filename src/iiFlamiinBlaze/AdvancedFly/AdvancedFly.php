@@ -70,11 +70,13 @@ class AdvancedFly extends PluginBase implements Listener{
                 if(!$sender->getAllowFlight()){
                     $sender->setAllowFlight(true);
                     $sender->setFlying(true);
-                    $sender->sendMessage(AdvancedFly::PREFIX . TextFormat::GREEN . "Flight mode activated"); 
+                    $sender->sendMessage(AdvancedFly::PREFIX . TextFormat::GREEN . "§dFlight mode has been enabled.");
+                    $sender->getPlayer()->addTitle("§dFlight Mode has been", "§aEnabled!", 40, 20, 40);
                 }else{
                     $sender->setAllowFlight(false);
                     $sender->setFlying(false);
-                    $sender->sendMessage(AdvancedFly::PREFIX . TextFormat::RED . "Regular mode activated");
+                    $sender->sendMessage(AdvancedFly::PREFIX . TextFormat::RED . "§5Flight mode has been disabled.");
+                    $sender->getPlayer()->addTitle("§5Flight mode has been", "§bDisabled!", 40, 20, 40);
                 }
             }else{
                 $sender->sendMessage(AdvancedFly::PREFIX . TextFormat::RED . "You can only use this command in survival mode");
@@ -94,7 +96,7 @@ class AdvancedFly extends PluginBase implements Listener{
                     if(!$damager instanceof Player) return;
                     if($damager->isCreative()) return;
                     if($damager->getAllowFlight() === true){
-                        $damager->sendMessage(AdvancedFly::PREFIX . TextFormat::DARK_RED . "Flight mode disabled due to combat");
+                        $damager->sendMessage(AdvancedFly::PREFIX . TextFormat::DARK_RED . "§6Flight mode disabled due to combat.");
                         $damager->setAllowFlight(false);
                         $damager->setFlying(false);
                         $damager->setGamemode(0); //This could be another method of fixing the Creative mode bug based on if you hit someone and you're in creative mode, it would take them out of creative fly (But still be in creative mode.)
