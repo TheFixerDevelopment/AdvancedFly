@@ -46,30 +46,31 @@ class AdvancedFly extends PluginBase implements Listener{
         $player = $event->getPlayer();
         $config = $this->getConfig();
         if($config->getNested("onJoin_FlyReset") === true){
-            if($player->isCreative()) return false;
+            if($player->isCreative()) return;
             $player->setAllowFlight(false);
             $player->setFlying(false);
-        if(!$player->hasPermission("fly.command")){
-            $player->sendMessage(AdvancedFly::PREFIX . TextFormat::RED . "Flight has been disabled");
+            $player->setGamemode(0); //Could potentially be needed. We'll see how this plans out.
+        if(!$player->hasPermission("fly.command")){ //The user has to have this permission for the message below to popup.
+            $player->sendMessage(AdvancedFly::PREFIX . TextFormat::RED . "Flight has been disabled"); //The message that's been sent to the user. (If they have the permission fly.command.
         }
     }
     }
 
-    public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
+    public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{ //The command API method.
         if($command->getName() === "fly"){
-            if(!$sender instanceof Player){
-                $sender->sendMessage(TextFormat::RED . "Use this command in-game");
+            if(!$sender instanceof Player){ //The command executing as.
+                $sender->sendMessage(TextFormat::RED . "Use this command in-game"); //If executes on console.
                 return false;
             }
             if(!$sender->hasPermission("fly.command")){
-                $sender->sendMessage(AdvancedFly::PREFIX . TextFormat::RED . "You do not have permission to use this command");
+                $sender->sendMessage(AdvancedFly::PREFIX . TextFormat::RED . "You do not have permission to use this command"); //No permission message.
                 return false;
             }
             if(!$sender->isCreative()){
                 if(!$sender->getAllowFlight()){
                     $sender->setAllowFlight(true);
                     $sender->setFlying(true);
-                    $sender->sendMessage(AdvancedFly::PREFIX . TextFormat::GREEN . "Flight mode activated");
+                    $sender->sendMessage(AdvancedFly::PREFIX . TextFormat::GREEN . "Flight mode activated"); 
                 }else{
                     $sender->setAllowFlight(false);
                     $sender->setFlying(false);
@@ -91,11 +92,12 @@ class AdvancedFly extends PluginBase implements Listener{
                 if($entity instanceof Player){
                     $damager = $event->getDamager();
                     if(!$damager instanceof Player) return;
-                    if($damager->isCreative()) return false;
+                    if($damager->isCreative()) return;
                     if($damager->getAllowFlight() === true){
                         $damager->sendMessage(AdvancedFly::PREFIX . TextFormat::DARK_RED . "Flight mode disabled due to combat");
                         $damager->setAllowFlight(false);
                         $damager->setFlying(false);
+                        $damager->setGamemode(0); //This could be another method of fixing the Creative mode bug based on if you hit someone and you're in creative mode, it would take them out of creative fly (But still be in creative mode.)
                     }
                 }
             }
