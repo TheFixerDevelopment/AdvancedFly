@@ -46,7 +46,7 @@ class AdvancedFly extends PluginBase implements Listener{
         $player = $event->getPlayer();
         $config = $this->getConfig();
         if($config->getNested("onJoin_FlyReset") === true){
-            if($player->isCreative()) return;
+            if($player->isCreative()) return false;
             $player->setAllowFlight(false);
             $player->setFlying(false);
         if(!$player->hasPermission("fly.command")){
@@ -91,7 +91,7 @@ class AdvancedFly extends PluginBase implements Listener{
                 if($entity instanceof Player){
                     $damager = $event->getDamager();
                     if(!$damager instanceof Player) return;
-                    if($damager->isCreative()) return;
+                    if($damager->isCreative()) return false;
                     if($damager->getAllowFlight() === true){
                         $damager->sendMessage(AdvancedFly::PREFIX . TextFormat::DARK_RED . "Flight mode disabled due to combat");
                         $damager->setAllowFlight(false);
