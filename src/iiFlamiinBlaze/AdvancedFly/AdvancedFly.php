@@ -49,8 +49,10 @@ class AdvancedFly extends PluginBase implements Listener{
             if($player->isCreative()) return;
             $player->setAllowFlight(false);
             $player->setFlying(false);
+        if(!$player->hasPermission("fly.command")){
             $player->sendMessage(AdvancedFly::PREFIX . TextFormat::RED . "Flight has been disabled");
         }
+    }
     }
 
     public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
