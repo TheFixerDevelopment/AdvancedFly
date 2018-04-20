@@ -50,7 +50,7 @@ class AdvancedFly extends PluginBase implements Listener{
             $player->setAllowFlight(false);
             $player->setFlying(false);
             $player->setGamemode(0); //Could potentially be needed. We'll see how this plans out.
-        if(!$player->hasPermission("fly.command")){ //The user has to have this permission for the message below to popup.
+        if ($player->hasPermission("fly.command")) { //The user has to have this permission for the message below to popup.
             $player->sendMessage(AdvancedFly::PREFIX . TextFormat::RED . "§dFlight has been disabled since you joined."); //The message that's been sent to the user on Player join. (If they have the permission fly.command.
         }
     }
